@@ -1,0 +1,78 @@
+=ncal2gcal 
+
+This lib/tool syncs your IBM Lotus Notes calendar with your (private) Google calendar. The synchronisation is only one-way: Lotus Notes events are pushed to your Google Calendar. All types of events (including recurring events like anniversaries) are supported.
+
+== Installation Instructions
+
+  gem install ncal2gcal
+
+==Usage
+
+Usage: ncal2gcal <command> <opts>
+
+Commands: sync
+
+Specific options:
+    -u, --notes-username USERNAME    Lotus Notes user name
+    -p, --notes-password PASSWORD    Lotus Notes password
+    -d, --notes-database DATABASE    Lotus Notes database (.nsf file)
+    -U, --gmail-username USERNAME    Google user name
+    -P, --gmail-password PASSWORD    Google user password
+    -C, --gmail-calendar CALENDAR    Google calendar (default: 'LotusNotes')
+    -D, --days DAYS                  Do not sync events older then DAYS days
+        --sync-desc                  Sync event description (default: no)
+        --sync-alarm                 Sync event alarm notification (default: no)
+        --sync-names                 Sync attendees (default: no)"
+         
+
+Example:
+    ncal2gcal sync -u user123 -p secret123  -d mail123.nsf -U username@gmail.com -P 123secret -C LotusNotes -D 14
+
+Common options:
+    -?, --help                       Show this message
+
+== Prerequisites
+
+ 1. Ruby 1.8.6 or later
+ 2. Lotus Notes 
+    * your .nsf file must be a local copy (replica) of your mail database stored in the data-folder 
+       of your lotus notes installation. 
+ 3. Google Account 
+    * use your gmail-account or create a new one  
+    * create an additional calendar for your LotusNotes Calender entries. Name it as you like 
+       (i.e. LotusNotes) but do not use whitespaces or any other special characters.
+
+== Supported Platforms
+
+This library is supported on Windows 2000 or later.
+
+==Used libs: 
+* gcal4ruby
+* win32ole 
+* datamapper
+* do_sqlite3
+* log4r
+...
+
+== Licence/Copyright
+
+Copyright (c) 2009, 2010 Elias Kugler
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

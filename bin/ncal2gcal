@@ -1,0 +1,69 @@
+#$:.unshift '../test/mock/win32ole','../test/mock/gcal4ruby','../lib' #<< '../lib'
+#$:.unshift '../test/mock/win32ole','../lib' #<< '../lib'
+#$:.unshift '../lib' #<< '../lib'
+
+require 'rubygems'
+require 'optparse'
+require 'ncal2gcal/sync'
+
+conf = {}
+opts = OptionParser.new do |opts|
+  opts.banner = "Usage: ncal2gcal <command> <opts> "
+  opts.separator ""
+  opts.separator "Commands: sync"
+  opts.separator ""
+  opts.separator "Specific options:"
+  opts.on("-u", "--notes-username USERNAME", "Lotus Notes user name") { |conf[:notes_user]| }
+  opts.on("-p", "--notes-password PASSWORD", "Lotus Notes password")  { |conf[:notes_password]| }
+  opts.on("-d", "--notes-database DATABASE", "Lotus Notes database (.nsf file)")  { |conf[:notes_db]| }
+  opts.on("-U", "--gmail-username USERNAME", "Google mail user name") { |conf[:gmail_user]| }
+  opts.on("-P", "--gmail-password PASSWORD", "Google mail password") { |conf[:gmail_password]| }
+  opts.on("-C", "--gmail-calendar CALENDAR", "Google calendar (default: 'LotusNotes')") { |conf[:gmail_calendar]| }
+  opts.on("-D", "--days DAYS", "Do not sync events older then DAYS days (default: no limit)") { |days| conf[:days]=days.to_i }
+  opts.on("--sync-desc", "Sync event description (default: no)") { |conf[:sync_desc]| }
+  opts.on("--sync-alarm", "Sync alarm notification (default: no)") { |conf[:sync_alarm]| }
+  opts.on("--sync-names", "Sync attendees (default: no)") { |conf[:sync_names]| }
+
+  opts.separator ""
+  opts.separator "Example:" 
+  opts.separator "    ncal2gcal sync -u user123 -p secret123 -d mail123.nsf -U username@gmail.com -P top123secret -C LotusNotes -D 14"
+  opts.separator ""
+  opts.separator "Common options:"
+    
+  # No argument, shows at tail.  This will print an options summary.
+  opts.on_tail("-?", "--help", "Show this message") do
+     puts opts
+     exit
+  end
+  
+  opts.on_tail("-v", "--version", "Show version") do
+    puts "ncal2gcal 0.1.6"
+    exit
+  end
+  
+  opts.on_tail "\n(c) 2009, 2010 Elias Kugler"    
+  
+end
+
+opts.parse! ARGV
+
+if defined?Ocra
+  exit
+else
+  if ARGV.length != 1
+    puts opts
+    exit
+  end
+  conf[:command] = ARGV[0]
+end
+
+# --------------------------------------------------
+#
+# --------------------------------------------------
+if conf[:command] == 'sync'
+  ngsync = NCal2GCal::NotesGoogleSync.new(conf)
+  ngsync.sync_events
+else
+  puts opts
+  exit
+end

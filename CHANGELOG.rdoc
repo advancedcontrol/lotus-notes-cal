@@ -1,0 +1,16 @@
+=== ncal2gcal 0.1.6
+  * New command line option --sync-names
+
+=== ncal2gcal 0.1.5
+  * New command line option --sync-alarm
+
+=== Version 0.1.4
+  * fixed issue with end date in all-day-events
+
+=== Version 0.1.3
+
+=== Version 0.1.1
+
+=== Version 0.1.1
+
+=== Version 0.1.0

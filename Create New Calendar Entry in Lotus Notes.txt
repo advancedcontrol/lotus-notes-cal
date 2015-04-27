@@ -1,0 +1,24 @@
+; Create New Calendar Entry in Lotus Notes
+NewCalMeetingBody="The Body"
+NewCalMeetingSubject="The Subject"
+NewCalLocation="the Location"
+TheAppRequestorEmail="email"
+
+Session = ObjectCreate("Notes.NotesSession")
+Notesdb = Session.GetDatabase("", "")
+If Notesdb.IsOpen == @FALSE Then Notesdb.OpenMail
+Doc = Notesdb.CreateDocument
+Doc.Form = "_Calendar Entry" ; Runs defaults as set in notes prefs
+Doc.Subject = NewCalMeetingSubject
+Doc.Body = NewCalMeetingBody
+Doc.Location = NewCalLocation
+Doc.MeetingType = "1"
+doc.sendto = TheAppRequestorEmail
+
+Doc.STARTDATETIME = ObjectType("DATE", "05/22/08 3:18:40 AM")
+Doc.CALENDARDATETIME = ObjectType("DATE", "05/22/08 3:18:40 AM")
+Doc.EndDateTime = ObjectType("DATE", "05/22/08 3:18:40 AM")
+
+ws = ObjectCreate("Notes.NotesUIWorkspace")
+
+ws.EDITDOCUMENT( "True", doc, "false" )
